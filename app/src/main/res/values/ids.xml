@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="quote" type="id" />
+    <item name="editQuote" type="id" />
+    <item name="button_random" type="id" />
+    <item name="button_view" type="id" />
+    <item name="button_add" type="id" />
+    <item name="textViewId" type="id" />
+    <item name="request_button" type="id" />
+    <item name="scrollView" type="id" />
+    <item name="editQuoteId" type="id" />
+    <item name="button_delete" type="id" />
+    <item name="button_top" type="id" />
+    <item name="verify_button" type="id" />
+    <item name="checksum_button" type="id" />
+    <item name="initialchecksum_button" type="id" />
+    <item name="showOutput" type="id" />
+    <item name="randomQuote" type="id" />
+</resources>
