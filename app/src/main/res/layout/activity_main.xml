@@ -23,7 +23,6 @@
         android:id="@+id/editQuote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="@+id/quote"
         android:layout_marginStart="187dp"
         android:layout_marginLeft="187dp"
         android:layout_toEndOf="@+id/quote"

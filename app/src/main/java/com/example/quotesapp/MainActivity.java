@@ -3,6 +3,7 @@ package com.example.quotesapp;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -38,20 +39,20 @@ import java.security.NoSuchAlgorithmException;
 
 public class MainActivity extends AppCompatActivity {
 
-    DatabaseHelper myDb;
-    EditText editQuote, editQuoteId;
-    Button addQuote;
-    Button deleteQuote;
-    Button viewAllQuotes;
-    Button randomQuote;
-    Button topQuote;
-    Button requestButton;
-    Button checkButton;
-    Button createCheckSum;
-    Button createInitialCheckSum;
+    DatabaseHelper db;
+    EditText addQuoteTxt, addQuoteId;
+    Button addQuoteBtn;
+    Button deleteQuoteBtn;
+    Button viewAllQuotesBtn;
+    Button randomQuoteBtn;
+    Button topQuoteBtn;
+    Button requestBtn;
+    Button checkBtn;
+    Button createCheckSumBtn;
+    Button createInitialCheckSumBtn;
     TextView showOutput;
     ProgressDialog progressDialog;
-    String filePath = "/data/data/com.example.quotesapp/databases/Quotes.db";
+    String filePath = "/data/data/com.example.quotesapp/databases/QuotesDB.db";
     String OriginalHex = null;
     String NewHex = null;
 
@@ -63,19 +64,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        myDb = new DatabaseHelper(this);
-        editQuote = (EditText) findViewById(R.id.editQuote);
-        editQuoteId = (EditText) findViewById(R.id.editQuoteId);
-        addQuote = (Button) findViewById(R.id.button_add);
-        deleteQuote = (Button) findViewById(R.id.button_delete);
-        viewAllQuotes = (Button) findViewById(R.id.button_view);
-        randomQuote = (Button) findViewById(R.id.button_random);
-        topQuote = (Button) findViewById(R.id.button_top);
-        requestButton = (Button) findViewById(R.id.request_button);
-        checkButton = (Button) findViewById(R.id.verify_button);
-        createCheckSum = (Button) findViewById(R.id.checksum_button);
-        createInitialCheckSum = (Button) findViewById(R.id.initialchecksum_button);
-        showOutput = (TextView) findViewById(R.id.showOutput);
+        db = new DatabaseHelper(this);
+        addQuoteTxt = findViewById(R.id.editQuote);
+        addQuoteId = findViewById(R.id.editQuoteId);
+        addQuoteBtn = findViewById(R.id.button_add);
+        deleteQuoteBtn = findViewById(R.id.button_delete);
+        viewAllQuotesBtn = findViewById(R.id.button_view);
+        randomQuoteBtn = findViewById(R.id.button_random);
+        topQuoteBtn = findViewById(R.id.button_top);
+        requestBtn = findViewById(R.id.request_button);
+        checkBtn = findViewById(R.id.verify_button);
+        createCheckSumBtn = findViewById(R.id.checksum_button);
+        createInitialCheckSumBtn = findViewById(R.id.initialchecksum_button);
+        showOutput = findViewById(R.id.showOutput);
 
         addQuoteToDB();
         deleteQuoteFromDB();
@@ -87,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         createNewCheckSum();
 
         progressDialog = new ProgressDialog(this);
-        requestButton.setOnClickListener(new View.OnClickListener() {
+        requestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new JSONTask().execute(file_url);
@@ -97,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void createInitialCheckSum() {
-        createInitialCheckSum.setOnClickListener(
+        createInitialCheckSumBtn.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -116,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void createNewCheckSum() {
-        createCheckSum.setOnClickListener(
+        createCheckSumBtn.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -150,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void check() {
-        checkButton.setOnClickListener(
+        checkBtn.setOnClickListener(
                 new View.OnClickListener() {
                     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                     @Override
@@ -159,8 +160,8 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(MainActivity.this, "Database is not corrupted", Toast.LENGTH_SHORT).show();
                         else
                             Toast.makeText(MainActivity.this, "Database corrupted", Toast.LENGTH_SHORT).show();
-                        Log.d("Verificare hex original", OriginalHex);
-                        Log.d("Verificare hex nou", NewHex);
+                        //Log.d("Verificare hex original", OriginalHex);
+                        //Log.d("Verificare hex nou", NewHex);
                     }
                 }
         );
@@ -172,12 +173,12 @@ public class MainActivity extends AppCompatActivity {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-    public void topQuotes() {
-        topQuote.setOnClickListener(
+    /*public void topQuotes() {
+        topQuoteBtn.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Cursor res1 = myDb.getTop();
+                        Cursor res1 = db.getTop();
                         if (res1.getCount() == 0) {
                             showMessage("Error!!!", "Nothing found!");
                             return;
@@ -191,14 +192,26 @@ public class MainActivity extends AppCompatActivity {
                         showMessage("Top random quotes:", buffer.toString());
                     }
                 });
-    }
+    }*/
 
-    public void deleteQuoteFromDB() {
-        deleteQuote.setOnClickListener(
+    public void topQuotes() {
+        topQuoteBtn.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Integer deleteRows = myDb.deleteQuote(editQuoteId.getText().toString());
+                        Intent intent = new Intent(MainActivity.this, ViewTopQuotes.class);
+                        startActivity(intent);
+                    }
+                }
+        );
+    }
+
+    public void deleteQuoteFromDB() {
+        deleteQuoteBtn.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Integer deleteRows = db.deleteQuote(addQuoteId.getText().toString());
                         if (deleteRows > 0)
                             Toast.makeText(MainActivity.this, "Quote deleted!", Toast.LENGTH_LONG).show();
                         else
@@ -208,60 +221,56 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void randomQuote() {
-        randomQuote.setOnClickListener(
+        randomQuoteBtn.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         String stringForQuote = null;
                         TextView rQuote = (TextView) findViewById(R.id.randomQuote);
-                        Cursor res = myDb.getRandomQuote();
+                        Cursor res = db.getRandomQuote();
                         StringBuffer buffer = new StringBuffer();
                         while (res.moveToNext()) {
                             //buffer.append("Quote: " + res.getString(1) + "\n\n");
                             stringForQuote = res.getString(1);
                             rQuote.setText(stringForQuote);
-                            myDb.checkRandom(stringForQuote);
+                            db.checkRandom(stringForQuote);
                         }
                     }
                 });
     }
 
     public void addQuoteToDB() {
-        addQuote.setOnClickListener(
+        addQuoteBtn.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        boolean quoteExists = myDb.checkQuote(editQuote.getText().toString());
-                        if (quoteExists == true) {
-                            Toast.makeText(getBaseContext(), "Quote already exist! Please add another one.", Toast.LENGTH_LONG).show();
-                        } else {
-                            myDb.insertQuote(editQuote.getText().toString());
-                            myDb.insertQuote2(editQuote.getText().toString());
-                            Toast.makeText(getBaseContext(), "Quote inserted!", Toast.LENGTH_LONG).show();
-                        }
-                        editQuote.setText("");
+                        boolean quoteExists = db.checkQuote(addQuoteTxt.getText().toString());
+                        if ((addQuoteTxt.length()) != 0) {
+                            if (quoteExists == true) {
+                                Toast.makeText(getBaseContext(), "Quote already exist! Please add another one.", Toast.LENGTH_LONG).show();
+                            } else {
+                                db.insertQuote(addQuoteTxt.getText().toString());
+                                // myDb.insertQuote2(editQuote.getText().toString());
+                                Toast.makeText(getBaseContext(), "Quote inserted!", Toast.LENGTH_LONG).show();
+                            }
+                            addQuoteTxt.setText("");
+                        } else
+                            Toast.makeText(getBaseContext(), "You must write a quote in the text field!", Toast.LENGTH_LONG).show();
                     }
+
                 });
     }
 
     public void viewAllQuotesFromDB() {
-        viewAllQuotes.setOnClickListener(
+        viewAllQuotesBtn.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Cursor res = myDb.getAllQuotes();
-                        if (res.getCount() == 0) {
-                            showMessage("Error!!!", "Nothing found!");
-                            return;
-                        }
-                        StringBuffer buffer = new StringBuffer();
-                        while (res.moveToNext()) {
-                            buffer.append("Id: " + res.getString(0) + "\n");
-                            buffer.append("Quote: " + res.getString(1) + "\n\n");
-                        }
-                        showMessage("Quotes:", buffer.toString());
+                        Intent intent = new Intent(MainActivity.this, ViewAllQuotes.class);
+                        startActivity(intent);
                     }
-                });
+                }
+        );
     }
 
     public void showMessage(String title, String Message) {
@@ -376,11 +385,11 @@ public class MainActivity extends AppCompatActivity {
                             });
                     alertDialog.show();
                 } else {
-                    if (myDb.checkQuote(showOutput.getText().toString()) == true) {
-                        Toast.makeText(getBaseContext(), "Completed." + "\n" + "Quote already exist in the database! Add another one tomorrow.", Toast.LENGTH_LONG).show();
+                    if (db.checkQuote(showOutput.getText().toString()) == true) {
+                        Toast.makeText(getBaseContext(), "Quote already exist in the database! Add another one tomorrow.", Toast.LENGTH_LONG).show();
                     } else {
-                        myDb.insertQuote(showOutput.getText().toString());
-                        myDb.insertQuote2(showOutput.getText().toString());
+                        db.insertQuote(showOutput.getText().toString());
+                        //myDb.insertQuote2(showOutput.getText().toString());
                         Toast.makeText(getBaseContext(), "Completed." + "\n" + "Quote inserted!", Toast.LENGTH_LONG).show();
                     }
                 }

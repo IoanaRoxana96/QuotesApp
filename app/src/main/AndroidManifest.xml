@@ -18,6 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ViewAllQuotes"></activity>
+        <activity android:name=".ViewTopQuotes"></activity>
     </application>
 
 </manifest>
