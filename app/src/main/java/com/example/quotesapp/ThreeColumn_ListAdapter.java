@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-
 public class ThreeColumn_ListAdapter extends ArrayAdapter<Quote> {
     private LayoutInflater mInflater;
     private ArrayList<Quote> quotes;

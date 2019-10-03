@@ -10,10 +10,8 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,66 +24,42 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.security.DigestInputStream;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+
 
 public class MainActivity extends AppCompatActivity {
 
     DatabaseHelper db;
-    EditText addQuoteTxt, addQuoteId;
-    Button addQuoteBtn;
-    Button deleteQuoteBtn;
     Button viewAllQuotesBtn;
-    Button randomQuoteBtn;
     Button topQuoteBtn;
     Button requestBtn;
     Button checkBtn;
-    Button createCheckSumBtn;
-    Button createInitialCheckSumBtn;
     TextView showOutput;
     ProgressDialog progressDialog;
-    String filePath = "/data/data/com.example.quotesapp/databases/QuotesDB.db";
-    String OriginalHex = null;
-    String NewHex = null;
 
     private static String file_url = "http://quotes.rest/qod.json";
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         db = new DatabaseHelper(this);
-        addQuoteTxt = findViewById(R.id.editQuote);
-        addQuoteId = findViewById(R.id.editQuoteId);
-        addQuoteBtn = findViewById(R.id.button_add);
-        deleteQuoteBtn = findViewById(R.id.button_delete);
         viewAllQuotesBtn = findViewById(R.id.button_view);
-        randomQuoteBtn = findViewById(R.id.button_random);
         topQuoteBtn = findViewById(R.id.button_top);
         requestBtn = findViewById(R.id.request_button);
-        checkBtn = findViewById(R.id.verify_button);
-        createCheckSumBtn = findViewById(R.id.checksum_button);
-        createInitialCheckSumBtn = findViewById(R.id.initialchecksum_button);
+        checkBtn = findViewById(R.id.check_button);
         showOutput = findViewById(R.id.showOutput);
 
-        addQuoteToDB();
-        deleteQuoteFromDB();
         viewAllQuotesFromDB();
         randomQuote();
         topQuotes();
         check();
-        createInitialCheckSum();
-        createNewCheckSum();
 
         progressDialog = new ProgressDialog(this);
         requestBtn.setOnClickListener(new View.OnClickListener() {
@@ -97,74 +71,20 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void createInitialCheckSum() {
-        createInitialCheckSumBtn.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        MessageDigest md = null;
-                        try {
-                            md = MessageDigest.getInstance("SHA-256");
-                        } catch (NoSuchAlgorithmException e) {
-                            e.printStackTrace();
-                        }
-                        OriginalHex = checksum (filePath, md);
-                        Toast.makeText(MainActivity.this, "Initial checksum generated", Toast.LENGTH_SHORT).show();
-                        Log.d("Valoare hex initial", OriginalHex);
-                    }
-                }
-        );
-    }
-
-    public void createNewCheckSum() {
-        createCheckSumBtn.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        MessageDigest md = null;
-                        try {
-                            md = MessageDigest.getInstance("SHA-256");
-                        } catch (NoSuchAlgorithmException e) {
-                            e.printStackTrace();
-                        }
-                        NewHex = checksum (filePath, md);
-                        Toast.makeText(MainActivity.this, "New checksum generated", Toast.LENGTH_SHORT).show();
-                        Log.d("Valoare hex nou", NewHex);
-                    }
-                }
-        );
-    }
-
-    private static String checksum(String filepath, MessageDigest md) {
-        try {
-            DigestInputStream dis = new DigestInputStream(new FileInputStream(filepath), md);
-            while (dis.read() != -1)
-                md = dis.getMessageDigest();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        StringBuilder result = new StringBuilder();
-        for (byte b : md.digest()) {
-            result.append(String.format("%02x", b));
-        }
-        return result.toString();
-    }
-
     public void check() {
         checkBtn.setOnClickListener(
                 new View.OnClickListener() {
                     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                     @Override
                     public void onClick(View view) {
-                        if (OriginalHex.equals(NewHex))
-                            Toast.makeText(MainActivity.this, "Database is not corrupted", Toast.LENGTH_SHORT).show();
-                        else
-                            Toast.makeText(MainActivity.this, "Database corrupted", Toast.LENGTH_SHORT).show();
-                        //Log.d("Verificare hex original", OriginalHex);
-                        //Log.d("Verificare hex nou", NewHex);
+                        openCheckIntegrity();
                     }
-                }
-        );
+                });
+    }
+
+    public void openCheckIntegrity() {
+        Intent intent = new Intent(this, CheckIntegrity.class);
+        startActivity(intent);
     }
 
     private boolean isNetworkAvailable() {
@@ -172,27 +92,6 @@ public class MainActivity extends AppCompatActivity {
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
-
-    /*public void topQuotes() {
-        topQuoteBtn.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Cursor res1 = db.getTop();
-                        if (res1.getCount() == 0) {
-                            showMessage("Error!!!", "Nothing found!");
-                            return;
-                        }
-                        StringBuffer buffer = new StringBuffer();
-                        while (res1.moveToNext()) {
-                            buffer.append("Id: " + res1.getString(0) + "\n");
-                            buffer.append("Quote: " + res1.getString(1) + "\n");
-                            buffer.append("N_of_occ: " + res1.getString(2) + "\n\n");
-                        }
-                        showMessage("Top random quotes:", buffer.toString());
-                    }
-                });
-    }*/
 
     public void topQuotes() {
         topQuoteBtn.setOnClickListener(
@@ -202,63 +101,20 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent = new Intent(MainActivity.this, ViewTopQuotes.class);
                         startActivity(intent);
                     }
-                }
-        );
-    }
-
-    public void deleteQuoteFromDB() {
-        deleteQuoteBtn.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Integer deleteRows = db.deleteQuote(addQuoteId.getText().toString());
-                        if (deleteRows > 0)
-                            Toast.makeText(MainActivity.this, "Quote deleted!", Toast.LENGTH_LONG).show();
-                        else
-                            Toast.makeText(MainActivity.this, "Quote already deleted or id doesn't exist!", Toast.LENGTH_LONG).show();
-                    }
                 });
     }
 
     public void randomQuote() {
-        randomQuoteBtn.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        String stringForQuote = null;
-                        TextView rQuote = (TextView) findViewById(R.id.randomQuote);
-                        Cursor res = db.getRandomQuote();
-                        StringBuffer buffer = new StringBuffer();
-                        while (res.moveToNext()) {
-                            //buffer.append("Quote: " + res.getString(1) + "\n\n");
-                            stringForQuote = res.getString(1);
-                            rQuote.setText(stringForQuote);
-                            db.checkRandom(stringForQuote);
-                        }
-                    }
-                });
-    }
-
-    public void addQuoteToDB() {
-        addQuoteBtn.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        boolean quoteExists = db.checkQuote(addQuoteTxt.getText().toString());
-                        if ((addQuoteTxt.length()) != 0) {
-                            if (quoteExists == true) {
-                                Toast.makeText(getBaseContext(), "Quote already exist! Please add another one.", Toast.LENGTH_LONG).show();
-                            } else {
-                                db.insertQuote(addQuoteTxt.getText().toString());
-                                // myDb.insertQuote2(editQuote.getText().toString());
-                                Toast.makeText(getBaseContext(), "Quote inserted!", Toast.LENGTH_LONG).show();
-                            }
-                            addQuoteTxt.setText("");
-                        } else
-                            Toast.makeText(getBaseContext(), "You must write a quote in the text field!", Toast.LENGTH_LONG).show();
-                    }
-
-                });
+        String stringForQuote = null;
+        TextView rQuote = (TextView) findViewById(R.id.randomQuote);
+        Cursor res = db.getRandomQuote();
+        StringBuffer buffer = new StringBuffer();
+        while (res.moveToNext()) {
+            //buffer.append("Quote: " + res.getString(1) + "\n\n");
+            stringForQuote = res.getString(1);
+            rQuote.setText(stringForQuote);
+            db.checkRandom(stringForQuote);
+        }
     }
 
     public void viewAllQuotesFromDB() {
@@ -269,18 +125,8 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent = new Intent(MainActivity.this, ViewAllQuotes.class);
                         startActivity(intent);
                     }
-                }
-        );
+                });
     }
-
-    public void showMessage(String title, String Message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setCancelable(true);
-        builder.setTitle(title);
-        builder.setMessage(Message);
-        builder.show();
-    }
-
 
     public class JSONTask extends AsyncTask<String, Integer, String> {
         BufferedReader reader = null;
@@ -299,7 +145,6 @@ public class MainActivity extends AppCompatActivity {
             progressDialog.setIndeterminate(false);
             progressDialog.show();
         }
-
 
         @Override
         protected String doInBackground(String... params) {

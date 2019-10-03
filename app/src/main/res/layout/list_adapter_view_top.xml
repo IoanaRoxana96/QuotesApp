@@ -8,8 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="45"
-        android:textSize="20dp"
-        android:textStyle="bold" />
+        android:textSize="15dp" />
 
     <TextView
         android:textSize="15dp"
@@ -20,7 +19,6 @@
 
     <TextView
         android:textSize="15dp"
-        android:textStyle="bold"
         android:layout_weight="45"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

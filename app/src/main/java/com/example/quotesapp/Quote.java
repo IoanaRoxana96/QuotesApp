@@ -6,7 +6,6 @@ public class Quote {
     private String Quote;
     private String N_Of_Occ;
 
-
     public Quote(String id, String quote, String n_Of_Occ) {
         Id = id;
         Quote = quote;

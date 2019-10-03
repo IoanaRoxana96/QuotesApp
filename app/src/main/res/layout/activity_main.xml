@@ -7,147 +7,49 @@
     android:layout_marginTop="10dp"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/quote"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="13dp"
-        android:text="Quote" />
-
-    <EditText
-        android:id="@+id/editQuote"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="187dp"
-        android:layout_marginLeft="187dp"
-        android:layout_toEndOf="@+id/quote"
-        android:layout_toRightOf="@+id/quote"
-        android:hint="Insert quote" />
-
-    <Button
-        android:id="@+id/button_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editQuote"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="60dp"
-        android:text="Add Quote" />
-
-    <Button
-        android:id="@+id/button_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="0dp"
-        android:layout_above="@+id/button_random"
-        android:layout_centerHorizontal="true"
-        android:text="View all quotes" />
-
-    <Button
-        android:id="@+id/button_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/button_view"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="2dp"
-        android:layout_marginTop="5dp"
-        android:text="Delete Quote" />
-
-    <Button
-        android:id="@+id/button_random"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/button_add"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginStart="2dp"
-        android:layout_marginLeft="2dp"
-        android:layout_marginTop="60dp"
-        android:text="Give me a random quote" />
-
-    <Button
-        android:id="@+id/button_top"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginStart="2dp"
-        android:layout_marginLeft="2dp"
-        android:layout_marginTop="265dp"
-        android:text="Top quotes" />
-
-    <TextView
-        android:id="@+id/textViewId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editQuote"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="25dp"
-        android:text="ID"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@+id/randomQuote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="225dp"
-        android:layout_marginTop="215dp"
-        android:layout_marginRight="15dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="30dp"
         android:textSize="15dp" />
 
-    <EditText
-        android:id="@+id/editQuoteId"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/button_view"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textViewId"
-        android:layout_marginStart="18dp"
-        android:layout_marginLeft="18dp"
-        android:layout_marginTop="-13dp"
-        android:layout_toEndOf="@+id/quote"
-        android:layout_toRightOf="@+id/quote"
-        android:hint="Insert the id for quote you want to delete" />
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="150dp"
+        android:text="View all quotes" />
+
+
+    <Button
+        android:id="@+id/button_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="200dp"
+        android:layout_marginTop="150dp"
+        android:text="Top quotes" />
 
 
     <Button
         android:id="@+id/request_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="2dp"
-        android:layout_marginTop="470dp"
+        android:layout_marginLeft="200dp"
+        android:layout_marginTop="200dp"
         android:text="Request page" />
 
-    <Button
-        android:id="@+id/initialchecksum_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="2dp"
-        android:layout_marginTop="320dp"
-        android:text="Generate initial checksum"/>
 
     <Button
-        android:id="@+id/checksum_button"
+        android:id="@+id/check_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="2dp"
-        android:layout_marginTop="370dp"
-        android:text="Generate new checksum"/>
-
-    <Button
-        android:id="@+id/verify_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="2dp"
-        android:layout_marginTop="420dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="200dp"
         android:text="Check integrity" />
 
 

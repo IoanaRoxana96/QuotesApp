@@ -39,5 +39,4 @@ public class ViewAllQuotes extends AppCompatActivity {
             listView.setAdapter(adapter);
         }
     }
-
 }

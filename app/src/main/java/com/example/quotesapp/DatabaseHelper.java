@@ -1,12 +1,10 @@
 package com.example.quotesapp;
 
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -21,8 +19,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, DATABASE_QUOTES, null, 3);
     }
 
-
-
     @Override
     public void onCreate (SQLiteDatabase db) {
         db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_QUOTES + " (" + id + " INTEGER PRIMARY KEY AUTOINCREMENT," +  quotes  + " TEXT NOT NULL," + n_of_occ + " INTEGER);");
@@ -34,8 +30,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-
-
     public boolean insertQuote(String quote) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -46,7 +40,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return false;
         else
             return true;
-
     }
 
     public boolean checkQuote (String quote) {
@@ -57,8 +50,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return false;
     }
 
-
-
     public boolean checkRandom(String quote) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(" UPDATE " + TABLE_QUOTES + " SET " + n_of_occ + " = N_OF_OCC + 1 " + " WHERE QUOTE = ? " , new String[]{quote});
@@ -66,8 +57,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return true;
         return false;
     }
-
-
 
     public Cursor getAllQuotes() {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -82,19 +71,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return res1;
     }
 
-
     public Cursor getRandomQuote() {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery("SELECT * FROM " + TABLE_QUOTES + " ORDER BY RANDOM() LIMIT 1", null);
         return res;
-
     }
-
 
     public Integer deleteQuote(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_QUOTES, "ID = ?", new String[] {id});
     }
-
-
 }
