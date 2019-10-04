@@ -5,6 +5,9 @@
 
     <TextView
         android:id="@+id/textId"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="45"
@@ -13,6 +16,8 @@
     <TextView
         android:textSize="15dp"
         android:layout_weight="10"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/textQuote"/>
@@ -20,6 +25,9 @@
     <TextView
         android:textSize="15dp"
         android:layout_weight="45"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/textN_of_occ"/>

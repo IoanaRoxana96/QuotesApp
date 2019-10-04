@@ -79,6 +79,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Integer deleteQuote(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_QUOTES, "ID = ?", new String[] {id});
+        return db.delete(TABLE_QUOTES, "ID = ?", new String[] {String.valueOf(id)});
     }
 }

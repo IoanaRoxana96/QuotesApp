@@ -1,5 +1,6 @@
 package com.example.quotesapp;
 
+import android.content.Context;
 import android.content.Intent;
 
 import android.os.Bundle;
@@ -17,7 +18,7 @@ public class AddQuote extends ViewAllQuotes {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.add_quote);
 
         db = new DatabaseHelper(this);
         addQuoteTxt = findViewById(R.id.editQuote);
@@ -60,7 +61,12 @@ public class AddQuote extends ViewAllQuotes {
                 });
     }
 
+    public static void start(Context ctx) {
+        Intent intent = new Intent(ctx, AddQuote.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        ctx.startActivity(intent);
 
+    }
 
 
 }
