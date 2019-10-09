@@ -26,11 +26,6 @@ public class ViewAllQuotes extends AppCompatActivity {
     ArrayList<Quote> quotesList;
     Quote quote;
     ListView listView;
-    ListViewAdapter adapter;
-    private final String fromColumnArr[] = {db.id, db.quotes};
-    private final int toViewIdArr[] = {R.id.textId, R.id.textQuote};
-    private List<Quote> quoteCheckedItemList = new ArrayList<Quote>();
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,19 +37,6 @@ public class ViewAllQuotes extends AppCompatActivity {
         ListViewAdapter adapter = new ListViewAdapter(this, R.layout.list_adapter_view, quotesList);
         listView = (ListView) findViewById(R.id.listViewAll);
         listView.setAdapter(adapter);
-    }
-
-    private String getQuoteCheckedItemIds() {
-        StringBuffer retBuf = new StringBuffer();
-        if (quoteCheckedItemList != null) {
-            int size = quoteCheckedItemList.size();
-            for (int i = 0; i < size; i++) {
-                Quote tmp = quoteCheckedItemList.get(i);
-                retBuf.append(tmp.getId());
-                retBuf.append(" ");
-            }
-        }
-        return retBuf.toString().trim();
     }
 
 
@@ -73,6 +55,7 @@ public class ViewAllQuotes extends AppCompatActivity {
         }
     }
 
+    
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
