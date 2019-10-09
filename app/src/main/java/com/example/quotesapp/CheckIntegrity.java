@@ -97,7 +97,7 @@ public class CheckIntegrity extends AppCompatActivity {
                     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                     @Override
                     public void onClick(View view) {
-                        if (OriginalHex.equals(NewHex))
+                        if (OriginalHex != null && NewHex != null & OriginalHex.equals(NewHex))
                             Toast.makeText(CheckIntegrity.this, "Database is not corrupted", Toast.LENGTH_SHORT).show();
                         else
                             Toast.makeText(CheckIntegrity.this, "Database corrupted", Toast.LENGTH_SHORT).show();

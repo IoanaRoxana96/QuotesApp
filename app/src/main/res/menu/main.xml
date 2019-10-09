@@ -11,6 +11,12 @@
         app:showAsAction="always"/>
 
     <item
+        android:id="@+id/action_edit"
+        android:icon="@drawable/edit"
+        android:title="Edit"
+        app:showAsAction="always"/>
+
+    <item
         android:id="@+id/action_delete"
         android:icon="@drawable/delete"
         android:title="Delete"

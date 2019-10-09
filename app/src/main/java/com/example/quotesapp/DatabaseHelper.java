@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.text.Editable;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -40,6 +41,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return false;
         else
             return true;
+    }
+
+    public boolean editQuote (String quote) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(quotes, quote);
+        db.update(TABLE_QUOTES, contentValues, " QUOTE = ? ", new String[]{quote} );
+        return true;
     }
 
     public boolean checkQuote (String quote) {
@@ -81,4 +90,5 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_QUOTES, "ID = ?", new String[] {String.valueOf(id)});
     }
+
 }

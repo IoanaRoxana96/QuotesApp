@@ -22,6 +22,7 @@
         <activity android:name=".ViewTopQuotes"></activity>
         <activity android:name=".CheckIntegrity"></activity>
         <activity android:name=".AddQuote"></activity>
+        <activity android:name=".EditQuote"></activity>
     </application>
 
 </manifest>

@@ -3,9 +3,9 @@ package com.example.quotesapp;
 public class Quote {
 
     private String Id;
-
     private String Quote;
     private String N_Of_Occ;
+
 
     public void setId(String id) {
         Id = id;

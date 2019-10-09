@@ -15,6 +15,7 @@
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
             android:focusable="false"
             android:clickable="false"/>
 
@@ -33,6 +34,7 @@
                     android:textSize="15dp"
                     android:layout_weight="1"
                     android:width="0dp"
+                     android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/textId"/>
