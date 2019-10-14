@@ -1,12 +1,16 @@
 package com.example.quotesapp;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.media.CamcorderProfile;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -29,6 +33,7 @@ public class ViewAllQuotes extends AppCompatActivity {
     ListView listView;
     Quote quote;
     TwoColumnListAdapter adapter;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -85,6 +90,7 @@ public class ViewAllQuotes extends AppCompatActivity {
         });
 
     }
+
     private void showDialogDelete(final int idQuote) {
         AlertDialog.Builder dialogDelete = new AlertDialog.Builder(ViewAllQuotes.this);
         dialogDelete.setTitle("Warning!");
@@ -95,6 +101,7 @@ public class ViewAllQuotes extends AppCompatActivity {
                 try {
                     db.deleteQuote(idQuote);
                     Toast.makeText(ViewAllQuotes.this, "Delete successfully", Toast.LENGTH_SHORT).show();
+                    adapter.notifyDataSetChanged();
                 } catch (Exception e) {
                     Log.e("Error", e.getMessage());
                 }
@@ -105,6 +112,7 @@ public class ViewAllQuotes extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
+                adapter.notifyDataSetChanged();
             }
         });
         dialogDelete.show();
@@ -128,6 +136,7 @@ public class ViewAllQuotes extends AppCompatActivity {
             public void onClick(View view) {
                 try {
                     db.updateQuote(position, editQuote.getText().toString().trim());
+                    adapter.notifyDataSetChanged();
                     dialog.dismiss();
                     Toast.makeText(getApplicationContext(), "Update successfully", Toast.LENGTH_SHORT).show();
                 } catch (Exception error) {
@@ -138,14 +147,27 @@ public class ViewAllQuotes extends AppCompatActivity {
         });
     }
 
-    /*private void updateQuoteList() {
-        Cursor cursor = db.getAllQuotes();
-        while (cursor.moveToNext()) {
-            String id = cursor.getString(0);
-            String quote = cursor.getString(1);
-            allQuotesList.add(new Quote(id, quote));
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.home, menu);
+        return super.onCreateOptionsMenu(menu);
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_add) {
+            Intent intent = new Intent(this, AddQuote.class);
+            startActivity(intent);
+            return true;
+        } else if (id == R.id.action_back) {
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                return true;
         }
-    }*/
+
+        return super.onOptionsItemSelected(item);
+    }
 
 }

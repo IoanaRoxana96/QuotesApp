@@ -18,10 +18,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ViewTopQuotes"></activity>
-        <activity android:name=".CheckIntegrity"></activity>
-        <activity android:name=".AddQuote"></activity>
-        <activity android:name=".ViewAllQuotes"></activity>
+        <activity android:name=".ViewTopQuotes"
+            android:label="Top quotes"></activity>
+        <activity android:name=".CheckIntegrity"
+            android:label="Check integrity"></activity>
+        <activity android:name=".AddQuote"
+            android:label="Add new quote"></activity>
+        <activity android:name=".ViewAllQuotes"
+            android:label="All quotes"></activity>
     </application>
 
 </manifest>
