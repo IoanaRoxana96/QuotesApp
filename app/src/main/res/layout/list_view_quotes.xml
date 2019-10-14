@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="25dp"
+            android:layout_marginLeft="55dp"
             android:textStyle="bold"
             android:text="Quote"/>
 
