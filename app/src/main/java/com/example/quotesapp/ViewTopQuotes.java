@@ -2,7 +2,6 @@ package com.example.quotesapp;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.Menu;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -13,9 +12,9 @@ import java.util.ArrayList;
 
 public class ViewTopQuotes extends AppCompatActivity {
     DatabaseHelper db;
-    ArrayList<Quote> quotesList;
+    ArrayList<QuoteTop> quotesList;
     ListView listView;
-    Quote quote;
+    QuoteTop quote;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,7 +30,7 @@ public class ViewTopQuotes extends AppCompatActivity {
             Toast.makeText(ViewTopQuotes.this, "There is nothing in the database!", Toast.LENGTH_LONG).show();
         } else {
             while (res.moveToNext()) {
-                quote = new Quote(res.getString(0), res.getString(1), res.getString(2));
+                quote = new QuoteTop(res.getString(0), res.getString(1), res.getString(2));
                 quotesList.add(quote);
             }
             ThreeColumn_ListAdapter adapter = new ThreeColumn_ListAdapter(this, R.layout.list_adapter_view_top, quotesList);
@@ -39,4 +38,5 @@ public class ViewTopQuotes extends AppCompatActivity {
             listView.setAdapter(adapter);
         }
     }
+
 }

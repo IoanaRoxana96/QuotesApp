@@ -1,15 +1,15 @@
 package com.example.quotesapp;
 
-public class Quote {
-
+public class QuoteTop {
     private String id;
     private String quote;
+    private String n_Of_Occ;
 
-    public Quote(String quote){
+    public QuoteTop(String quote){
         this.quote = quote;
     }
 
-    public Quote() {
+    public QuoteTop() {
 
     }
     public void setId(String  id) {
@@ -20,11 +20,15 @@ public class Quote {
         this.quote = quote;
     }
 
+    public void setN_Of_Occ(String n_Of_Occ) {
+        this.n_Of_Occ = n_Of_Occ;
+    }
 
 
-    public Quote(String id, String quote) {
+    public QuoteTop(String id, String quote, String n_Of_Occ) {
         this.id = id;
         this.quote = quote;
+        this.n_Of_Occ = n_Of_Occ;
     }
 
     public String getId() {
@@ -34,6 +38,7 @@ public class Quote {
     public String getQuote() {
         return quote;
     }
-
-
+    public String getN_Of_Occ() {
+        return n_Of_Occ;
+    }
 }

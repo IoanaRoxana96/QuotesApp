@@ -5,7 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.text.Editable;
+import android.database.sqlite.SQLiteStatement;
+
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -43,13 +44,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return true;
     }
 
-    public boolean editQuote (String quote) {
+    public boolean updateQuote (int id, String quote) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(quotes, quote);
-        db.update(TABLE_QUOTES, contentValues, " QUOTE = ? ", new String[]{quote} );
+        db.update(TABLE_QUOTES, contentValues,  "ID = ?" , new String[]{String.valueOf(id)});
         return true;
     }
+
 
     public boolean checkQuote (String quote) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -73,11 +75,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return res;
     }
 
+    public Cursor getIdQuote(String quote) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("SELECT " + id + " FROM " + TABLE_QUOTES + " WHERE " + quotes + " = '" + quote +"' ", null);
+        return res;
+    }
+
 
     public Cursor getTop() {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res1 = db.rawQuery("SELECT * FROM " + TABLE_QUOTES, null);
-        return res1;
+        Cursor res = db.rawQuery("SELECT * FROM " + TABLE_QUOTES, null);
+        return res;
     }
 
     public Cursor getRandomQuote() {
@@ -86,7 +94,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return res;
     }
 
-    public Integer deleteQuote(String id) {
+    public Integer deleteQuote(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_QUOTES, "ID = ?", new String[] {String.valueOf(id)});
     }

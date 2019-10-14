@@ -1,6 +1,5 @@
 package com.example.quotesapp;
 
-import android.content.Context;
 import android.content.Intent;
 
 import android.os.Bundle;
@@ -60,13 +59,4 @@ public class AddQuote extends ViewAllQuotes {
                     }
                 });
     }
-
-    public static void start(Context ctx) {
-        Intent intent = new Intent(ctx, AddQuote.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        ctx.startActivity(intent);
-
-    }
-
-
 }

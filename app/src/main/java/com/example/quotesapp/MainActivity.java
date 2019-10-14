@@ -10,6 +10,8 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -71,6 +73,25 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return super.onCreateOptionsMenu(menu);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_add) {
+            Intent intent = new Intent(this, AddQuote.class);
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     public void check() {
         checkBtn.setOnClickListener(
                 new View.OnClickListener() {
@@ -110,7 +131,6 @@ public class MainActivity extends AppCompatActivity {
         Cursor res = db.getRandomQuote();
         StringBuffer buffer = new StringBuffer();
         while (res.moveToNext()) {
-            //buffer.append("Quote: " + res.getString(1) + "\n\n");
             stringForQuote = res.getString(1);
             rQuote.setText(stringForQuote);
             db.checkRandom(stringForQuote);
@@ -234,7 +254,6 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(getBaseContext(), "Quote already exist in the database! Add another one tomorrow.", Toast.LENGTH_LONG).show();
                     } else {
                         db.insertQuote(showOutput.getText().toString());
-                        //myDb.insertQuote2(showOutput.getText().toString());
                         Toast.makeText(getBaseContext(), "Completed." + "\n" + "Quote inserted!", Toast.LENGTH_LONG).show();
                     }
                 }
@@ -243,4 +262,5 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
 }

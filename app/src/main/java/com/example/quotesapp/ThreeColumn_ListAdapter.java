@@ -9,12 +9,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class ThreeColumn_ListAdapter extends ArrayAdapter<Quote> {
+public class ThreeColumn_ListAdapter extends ArrayAdapter<QuoteTop> {
     private LayoutInflater mInflater;
-    private ArrayList<Quote> quotes;
+    private ArrayList<QuoteTop> quotes;
     private int mViewResourceId;
 
-    public ThreeColumn_ListAdapter(Context context, int textViewResourceId, ArrayList<Quote> quotes) {
+    public ThreeColumn_ListAdapter(Context context, int textViewResourceId, ArrayList<QuoteTop> quotes) {
         super(context, textViewResourceId, quotes);
         this.quotes = quotes;
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -24,7 +24,7 @@ public class ThreeColumn_ListAdapter extends ArrayAdapter<Quote> {
     public View getView(int position, View convertView, ViewGroup parents) {
         convertView = mInflater.inflate(mViewResourceId, null);
 
-        Quote quote = quotes.get(position);
+        QuoteTop quote = quotes.get(position);
         if (quote != null) {
             TextView id = (TextView) convertView.findViewById(R.id.textId);
             TextView quot = (TextView) convertView.findViewById(R.id.textQuote);
